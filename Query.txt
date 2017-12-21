@@ -1,0 +1,69 @@
+1a) select ssn from e where 
+ssn=( select usn from a where 
+projectno = ( select projectno from p where projectarea =‘database’ ) );
+b) select count (ssn), deptno from e group by deptno;
+c) update a  set projectno='20' 
+where  usn=’01’;
+
+
+
+2a) select pno from supply  where sno =( select sno 
+from supplier where sname=‘Ram');
+b) select sname, pname  from supplier, supply, part  where pname ='bolt' AND 
+supply.sno = supplier.sno 
+AND part.pno = supply.pno; c) delete from part where 
+colour=‘green';
+
+
+3a) select bid from reservers where sid =( select sid from sailors where sname = ‘RAM’);
+b) select bid from reservers
+group by bid having count( sid) =
+(select count ( sid ) from sailors );
+c) select count (bid ), sid 
+from reservers group by sid;
+
+
+4a) select w.wname from warehouse w,
+part p, shipment s  where p.colour=‘RED’
+AND p.no=s.no AND s.wno=w.wno ;
+b) select pno from shipment 
+group by pno having count (wno)=
+(select count (wno)from warehouse );
+c) select count (pno) , wno
+from shipments group by wno;
+
+
+
+5a) select name from student where USN=(select USN from 
+borrow where ISBN='123'); b) select name from student s
+borrow b where s.usn = b.usn
+and ISBN= (select ISBN from book
+books where title = ‘Database’ );
+c) select count(ISBN) , name
+from borrow b, student s
+where s.usn = b.usn group by name; 
+
+
+1
+>db.EMPLOYEE.find ( { “ DeptNo ” : ‘ XYZ ’ } ). pretty( )
+>db.EMPLOYEE.find( { “ProjectNo “:104 } ). pretty( )
+
+
+2.
+>db.WAREHOUSE.update( { “PNO ”: 1950 }, { $ set : { “ PNO “ : 2017 } } )
+>db.WAREHOUSE.find ( { “ PNO “ :  2017 } ). pretty( )
+
+
+3.
+>db.BOATRES.find ( { “ SNAME “ :  ‘ Sucre ’ } ). count( )
+>db.BOATRES.find ( { “ COLOUR “:  ' White’ } ). pretty( )
+
+
+4.
+>db.SHIPMENT.find ( { “ WNAME “ : ‘ABC ‘ } ). pretty( )
+>db.SHIPMENT.aggregate ( [ { $group: { _id : ” $WNAME ” ,  total : { $sum : “ $QUANTITY ” } } } ] )
+
+
+5.
+>db.LIBRARY.find ( { “ ISBN “ : 1122 },  { “SSN " : 1, _id: 0 } ). pretty( )
+>db.LIBRARY.find ( { “ TITLE “ : ‘datbase’ },  { “ SSN” :1, _id:0 } ). pretty()
